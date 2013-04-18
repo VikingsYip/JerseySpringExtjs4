@@ -9,14 +9,24 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.ewell.service.FooBarService;
+import org.ewell.service.scale.VoterService;
 import org.ewell.vo.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @Path("/users")
 public class UserResource {
+	@Autowired
+	private VoterService voterService;
+	@Autowired
+	FooBarService fooBarService;
+
 	@GET
 	public Response getRatios() {
+		System.out.println(fooBarService.getMessage("fuck you"));
+		// voterService.getVoters();
 		String jsonStr = generateJsonEmployee();
 		System.out.println("jsonStr " + jsonStr);
 		return Response.status(200).entity(jsonStr).build();
