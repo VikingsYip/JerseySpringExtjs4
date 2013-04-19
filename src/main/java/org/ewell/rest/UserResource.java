@@ -4,11 +4,15 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.ewell.model.ChooseModel;
 import org.ewell.service.FooBarService;
 import org.ewell.service.scale.VoterService;
 import org.ewell.vo.Employee;
@@ -25,11 +29,20 @@ public class UserResource {
 
 	@GET
 	public Response getRatios() {
-		System.out.println(fooBarService.getMessage("fuck you"));
 		// voterService.getVoters();
 		String jsonStr = generateJsonEmployee();
 		System.out.println("jsonStr " + jsonStr);
 		return Response.status(200).entity(jsonStr).build();
+	}
+
+	@POST
+	@Consumes("application/x-www-form-urlencoded")
+	public Response chosseOne(@FormParam("chooseVal") String chooseVal) {
+		ChooseModel model = new ChooseModel();
+		model.setChooseCount(1);
+		model.setChooseItem(chooseVal);
+		voterService.addVote(model);
+		return Response.status(200).entity(chooseVal).build();
 	}
 
 	/**

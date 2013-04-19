@@ -1,0 +1,1 @@
+/** * * Copyright 2012 Hangzhou Ewell Information Technology Co.Ltd. All rights reserved. * Ewell Information Technology PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. */package org.ewell.util;/** *  * @author chenyang * @version $Id: ChooseItemEnum.java, v 0.1 2013-4-19 обнГ1:35:33 ibm Exp $ */public enum ChooseItemEnum {	AGREE, UNAGREE, GIVEUP;}

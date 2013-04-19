@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Votes">
+
+	<resultMap id="resultMap" class="org.ewell.model.ChooseModel">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="choose_item" property="chooseItem" jdbcType="VARCHAR" />
+		<result column="choose_count" property="chooseCount" jdbcType="INTEGER" />
+	</resultMap>
+
+	
+
+	<insert id="addVote" parameterClass="org.ewell.model.ChooseModel">
+		insert into ewell_vote
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="chooseItem">
+				choose_item
+			</isNotNull>
+			<isNotNull prepend="," property="chooseCount">
+				choose_count
+			</isNotNull>
+			)
+		</dynamic>
+		values
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="chooseItem">
+				#chooseItem:VARCHAR#
+			</isNotNull>
+			<isNotNull prepend="," property="chooseCount">
+				#chooseCount#
+			</isNotNull>
+			)
+		</dynamic>
+		<selectKey resultClass="java.lang.Integer" keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+</sqlMap>

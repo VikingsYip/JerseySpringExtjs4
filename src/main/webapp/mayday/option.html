@@ -1,41 +1,83 @@
 <HTML>
- <HEAD>
-  <TITLE>EWELL护士事业部投票</TITLE>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="../ext-4.0/resources/css/ext-all.css" />
-  <script type="text/javascript" src="../ext-4.0/bootstrap.js"></script>
-  <script type="text/javascript" src="../ext-4.0/locale/ext-lang-zh_CN.js"></script>
-  <script type="text/javascript">
-	Ext.onReady(function(){
-		new Ext.form.Panel({
-			title:'EWELL护士事业部投票',
-			bodyStyle:'padding:5 5 5 5',//表单边距
+<HEAD>
+<TITLE>EWELL护士事业部投票</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css"
+	href="../ext-4.0/resources/css/ext-all.css" />
+<script type="text/javascript" src="../ext-4.0/bootstrap.js"></script>
+<script type="text/javascript" src="../ext-4.0/locale/ext-lang-zh_CN.js"></script>
+<script type="text/javascript">
+	Ext.onReady(function() {
+		var fp = new Ext.FormPanel({
+			title : 'EWELL护士事业部投票',
+			bodyStyle : 'padding:5 5 5 5',//表单边距
 			frame : true,
-			height:150,
-			width:300,
-			renderTo :'form',
-			defaults:{//统一设置表单字段默认属性
-				labelSeparator :'：',//分隔符
-				labelWidth : 80,//标签宽度
-				width : 200,//字段宽度
-				labelAlign : 'left'//标签对齐方式
-			},
-			items:[{
-				xtype : 'radio',
-				name : 'option',//名字相同的单选框会作为一组
-				fieldLabel:'选项一',
-				boxLabel : '去浙西大峡谷'
-			},{
-				xtype : 'radio',
-				name : 'option',//名字相同的单选框会作为一组
-				fieldLabel:'选项二',
-				boxLabel : '去临安挖笋'
-			}]
+			height : 150,
+			width : 400,
+			labelWidth : 110,
+			renderTo : 'form',
+			bodyStyle : 'padding:5 5 5 5',//表单边距
+			defaultType : 'radio',
+			items : [ {
+				checked : true,
+				fieldLabel : '选项一',
+				boxLabel : '放弃女神',
+				name : 'the-choose',
+
+				inputValue : '1'
+			}, {
+				fieldLabel : '选项二',
+				labelSeparator : '',
+				boxLabel : '赞成女神',
+				name : 'the-choose',
+
+				inputValue : '2'
+			}, {
+				fieldLabel : '选项三',
+				labelSeparator : '',
+				boxLabel : '放弃',
+				name : 'the-choose',
+
+				inputValue : '3'
+			} ],
+			buttons : [
+					{
+						text : '选择',
+						handler : function() {
+							Ext.Msg.alert("", fp.form.findField("the-choose")
+									.getGroupValue());
+							var value = fp.form.findField("the-choose")
+									.getGroupValue();
+							fp.form.submit({
+								waitTitle : '提交中',
+								waitMsg : '提交中，请稍后......',
+								url : '/vote/rest/users',
+								method : 'POST',
+								params : {
+									'chooseVal' : value
+								},
+								//timeout: 60000, //1分钟
+								success : function(mForm, mAction) {
+									win.close();
+								},
+								failure : function(mForm, mAction) {
+									//处理失败事件
+								}
+							});
+
+						}
+					}, {
+						text : '重置',
+						handler : function() {
+							fp.getForm().reset();
+						}
+					} ]
+
 		});
 	});
-  </script>
- </HEAD>
- <BODY STYLE="margin: 10px">
- 	<div id='form'></div>
- </BODY>
+</script>
+</HEAD>
+<BODY>
+	<div id='form'></div>
+</BODY>
 </HTML>
