@@ -9,6 +9,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -26,6 +27,14 @@ public class UserResource {
 	private VoterService voterService;
 	@Autowired
 	FooBarService fooBarService;
+
+	@GET
+	@Path("{chooseItem}")
+	public Response deleteItem(@PathParam("chooseItem") String chooseItem) {
+
+		System.out.println("chooseItem is " + chooseItem);
+		return Response.status(200).entity(chooseItem).build();
+	}
 
 	@GET
 	public Response getRatios() {
